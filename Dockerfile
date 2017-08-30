@@ -56,6 +56,10 @@ RUN     pip install influxdb && \
 
 RUN     mkdir /src
 
+# # create self-signed cert for nginx
+RUN     openssl req -subj '/CN=opennti.local/O=OpenNTI/C=US' -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/cert.key -out /etc/nginx/cert.crt
+
+
 ########################
 ### Install Grafana
 ########################
@@ -138,6 +142,7 @@ RUN chmod -R 777 /var/log/
 
 # ## Graphana
 EXPOSE 80
+EXPOSE 443
 EXPOSE 3000
 
 # # Influxdb Admin server WebUI
